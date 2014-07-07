@@ -4,10 +4,6 @@ public class Route {
 
 	public Station destination;
 	public Station origin;
-
-	public String time            = "now";
-	public int howManyTripsBefore = 0;
-	public int howManyTripsAfter  = 3;
 	
 	private Schedule[] schedule; // this model feels a little weird, but.. schedules are time labelled instances of routes
 	
