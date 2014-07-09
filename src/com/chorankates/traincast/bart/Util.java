@@ -6,27 +6,14 @@ public class Util {
 	// TODO implement a basic http getter
 	// TODO implement xml deserialization
 	
-	// TODO get a list of stations to ease creation of Station.java objects
 	// TODO get a list of station advisories
 
-	public String endpoint = "http://api.bart.gov/api/etd.aspx";
-	public String key      = "MW9S-E7SL-26DU-VV8V"; // don't worry, it's public.. 
+	public static String BARTendpoint = "http://api.bart.gov/api/etd.aspx";
+	public static String BARTkey      = "MW9S-E7SL-26DU-VV8V"; // don't worry, it's public.. 
 
-
-	HashMap<String, Station> callStns () {
-		HashMap<String, Station> stations;		
-		
-		HashMap<String, String> document;
-		String url = String.format("%s?key=%s&cmd=stns", endpoint, key);		
-		
-		document = callBART(url);  
-		
-		return stations;
-	}
-	
-	
-	HashMap<String, Schedule> callArrive (Station origin, Station destination) {
-		HashMap<String, Schedule> arrivals;
+	// TODO this probably belongs somewhere else..
+	Schedule[] callArrive (Station origin, Station destination) {
+		Schedule[] arrivals = null;
 		HashMap<String, String> document;
 		
 		// TODO should probably have a way for users to control these..
@@ -34,9 +21,9 @@ public class Util {
 		int howManyTripsBefore = 0;
 		int howManyTripsAfter  = 3;
 
-		String url = String.format("%s?&key=%s&cmd=arrive&time=%s&b=%s&a=%s",
-					endpoint,
-					key,
+		String url = String.format("cmd=arrive&orig=%s&dest=%s&time=%s&b=%s&a=%s",
+					origin.getCode(),
+					destination.getCode(),
 					time,
 					howManyTripsBefore,
 					howManyTripsAfter
@@ -47,11 +34,16 @@ public class Util {
 		return arrivals;
 	}
 	
-	
-	HashMap<String, String> callBART (String url) {
-		HashMap<String, String> response;
+	// we probably need to return XML here.. 
+	public static HashMap<String, String> callBART (String query) {
+		// callBART() with a query, the endpoint and key (and trailing &) will be prepended to your query
+		HashMap<String, String> parsed_response = null;
 		
-		return response;
+		String url = String.format("%s?key=%s&%s", BARTendpoint, BARTkey, query);
+		
+		// call something to convert stringy XML to an object of some sort
+		
+		return parsed_response;
 	}
 	
 	
